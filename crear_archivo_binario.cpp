@@ -16,13 +16,13 @@ struct Estudiante{
 void abrir_estudiante();
  void modificar_estudiante();
  void buscar_codigo();
- //void eliminar_estudiante();
+ void eliminar_estudiante();
 int main (){
 	abrir_estudiante();
- ingresar_estudiante();
-	modificar_estudiante();
+  ingresar_estudiante();
+//	modificar_estudiante();
 	//buscar_codigo();
-//	eliminar_estudiante();
+	eliminar_estudiante();
 	return 0;	
 }
 
@@ -172,7 +172,7 @@ void ingresar_estudiante(){
 	fclose(archivo);
 	abrir_estudiante();
 	//buscar_indice();	
-	buscar_codigo();
+	//buscar_codigo();
 }
 void modificar_estudiante(){
 	
@@ -208,4 +208,38 @@ void modificar_estudiante(){
 	abrir_estudiante();
 		system("PAUSE");
 }
+void eliminar_estudiante(){
+	const char *nombre_archivo_temp = "archivo_temp.dat";
+	Estudiante estudiante;
+	FILE* archivo = fopen(nombe_archivo, "rb");
+	FILE* archivo_temp=fopen(nombre_archivo_temp,"w+b");
+	int id=0,i=0;
+		cout<<"ingrese el id a eliminar:"; 
+	cin>>id; 
+	                                                                                
+		while(fread(&estudiante,sizeof(Estudiante),1,archivo)){
+			
+			if (i != id){
+				fwrite(&estudiante,sizeof(Estudiante),1,archivo_temp);
+			} 
+			
+			i++; 
+		}
+	                
+		fclose(archivo_temp); 
+		fclose(archivo); 
+	                
+		archivo_temp=fopen(nombre_archivo_temp,"rb"); 
+		archivo=fopen(nombe_archivo,"wb"); 
+	 
+		while(fread(&estudiante,sizeof(Estudiante),1, archivo_temp)){ 
+			fwrite(&estudiante,sizeof(Estudiante),1, archivo); 
+		}
+	                
+	fclose(archivo_temp); 
+	fclose(archivo); 
+	abrir_estudiante();
+		system("PAUSE");
+}
+
 

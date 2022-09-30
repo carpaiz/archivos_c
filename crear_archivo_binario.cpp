@@ -1,7 +1,4 @@
 #include <iostream>
-#include <stdio.h>  
-#include <string.h> 
-
 
 using namespace std;
 const char *nombe_archivo = "archivo.dat";
@@ -20,7 +17,7 @@ void abrir_estudiante();
 int main (){
 	abrir_estudiante();
   ingresar_estudiante();
-//	modificar_estudiante();
+	modificar_estudiante();
 	//buscar_codigo();
 	eliminar_estudiante();
 	return 0;	
@@ -71,9 +68,7 @@ void buscar_codigo(){
 		
 	cout<<"------------------ "<<pos<<" ------------------"<<endl;
 	fseek ( archivo,pos * sizeof(Estudiante), SEEK_SET );
-
     fread ( &estudiante, sizeof( Estudiante ), 1, archivo );
-
     	cout << "Codigo: " << estudiante.codigo << endl;
         cout << "Nombre: " << estudiante.nombre << endl;
         cout << "Apellido: " << estudiante.apellido << endl;
@@ -142,25 +137,22 @@ void ingresar_estudiante(){
 	
 	
 		Estudiante estudiante;
-		 string nombre,apellido;
 		do{
 			fflush(stdin);
-			
+		
 		cout<<"Ingrese el Codigo:";
-		cin>>estudiante.codigo;
+		cin>>estudiante.codigo;      
         cin.ignore();
         
 		cout<<"Ingrese el Nombre:";
-		getline(cin,nombre);
-    	strcpy(estudiante.nombre, nombre.c_str()); 
-			
+		cin.getline(estudiante.nombre,50);
 		cout<<"Ingrese el Apellido:";
-		getline(cin,apellido);
-		strcpy(estudiante.apellido, apellido.c_str()); 
+		cin.getline(estudiante.apellido,50);
+		
 		
 		cout<<"Ingrese el Telefono:";
 		cin>>estudiante.telefono;
-		cin.ignore();
+		
 		
 		fwrite( &estudiante, sizeof(Estudiante), 1, archivo );
 		
@@ -179,7 +171,6 @@ void modificar_estudiante(){
 	FILE* archivo = fopen(nombe_archivo, "r+b");
 	
 		int id;
-		string nombre,apellido;	
     	Estudiante estudiante;
     
 		cout << "Ingrese el ID que desea Modificar: ";
@@ -191,12 +182,9 @@ void modificar_estudiante(){
         cin.ignore();
         
 		cout<<"Ingrese el Nombre:";
-		getline(cin,nombre);
-    	strcpy(estudiante.nombre, nombre.c_str()); 
-			
+		cin.getline(estudiante.nombre,50);
 		cout<<"Ingrese el Apellido:";
-		getline(cin,apellido);
-		strcpy(estudiante.apellido, apellido.c_str()); 
+		cin.getline(estudiante.apellido,50);
 		
 		cout<<"Ingrese el Telefono:";
 		cin>>estudiante.telefono;
@@ -206,7 +194,7 @@ void modificar_estudiante(){
 		
 	fclose(archivo);
 	abrir_estudiante();
-		system("PAUSE");
+	
 }
 void eliminar_estudiante(){
 	const char *nombre_archivo_temp = "archivo_temp.dat";
@@ -241,5 +229,3 @@ void eliminar_estudiante(){
 	abrir_estudiante();
 		system("PAUSE");
 }
-
-
